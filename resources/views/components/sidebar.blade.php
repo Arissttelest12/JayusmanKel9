@@ -75,20 +75,37 @@
 
 
 <div class="p-4 border-t border-[#393E46]">
-    <div class="flex items-center justify-between">
-        <div class="flex items-center space-x-2">
-            <div class="w-8 h-8 bg-[#00ADB5]/20 rounded-full flex items-center justify-center">
-                <svg class="w-4 h-4 text-[#00ADB5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                </svg>
+    <div class="flex flex-col space-y-3">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <div class="w-8 h-8 bg-[#00ADB5]/20 rounded-full flex items-center justify-center">
+                    <svg class="w-4 h-4 text-[#00ADB5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                    </svg>
+                </div>
+                <div class="max-w-[100px] truncate">
+                    <p class="text-sm font-medium text-[#EEEEEE] truncate" title="{{ Auth::user() ? Auth::user()->name : 'Guest' }}">
+                        {{ Auth::user() ? Auth::user()->name : 'Guest' }}
+                    </p>
+                </div>
             </div>
-            <div>
-                <p class="text-sm font-medium text-[#EEEEEE]">Admin</p>
+            <div class="text-xs text-[#EEEEEE]/40">
+                v1.0.0
             </div>
         </div>
-        <div class="text-xs text-[#EEEEEE]/40">
-            v1.0.0
-        </div>
+        
+        @auth
+            <!-- Form Logout Breeze -->
+            <form method="POST" action="{{ route('logout') }}" class="w-full">
+                @csrf
+                <button type="submit" class="w-full flex items-center justify-center space-x-2 px-3 py-2 bg-red-600 hover:bg-red-700 text-white rounded-xl text-xs font-semibold transition-all duration-300">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                    </svg>
+                    <span>Log Out</span>
+                </button>
+            </form>
+        @endauth
     </div>
 </div>
 </aside>

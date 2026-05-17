@@ -17,7 +17,7 @@
         <span class="text-sm text-muted-foreground-1">
           Sign up for Pro
         </span>
-        <a class="py-1.5 px-2 flex items-center justify-center gap-x-1 bg-primary-500/10 border border-primary-200 text-primary-700 text-xs rounded-full py-1 hover:bg-primary-500/20 focus:outline-hidden focus:bg-primary-500/20 dark:text-primary-400 dark:border-primary-500/20" href="#">
+        <a class="py-1.5 px-2 flex items-center justify-center gap-x-1 bg-primary-500/10 border border-primary-200 text-primary-700 text-xs rounded-full py-1 hover:bg-primary-500/20 focus:outline-hidden focus:bg-primary-500/20" href="#">
           Get 7 days free
           <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="m9 18 6-6-6-6"></path>
@@ -62,7 +62,7 @@
                   <span class="block font-medium text-xl text-foreground">
                     22,900
                   </span>
-                  <span class="flex justify-center items-center gap-x-1 text-sm text-green-600 dark:text-green-500">
+                  <span class="flex justify-center items-center gap-x-1 text-sm text-green-600">
                     <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                       <path d="m5 12 7-7 7 7"></path>
                       <path d="M12 19V5"></path>
@@ -83,7 +83,7 @@
 
               <div class="flex flex-col items-end">
                 <div class="flex items-center gap-2">
-                  <span class="flex justify-center items-center gap-x-1 text-sm text-green-600 dark:text-green-500">
+                  <span class="flex justify-center items-center gap-x-1 text-sm text-green-600">
                     <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                       <path d="m5 12 7-7 7 7"></path>
                       <path d="M12 19V5"></path>
@@ -120,7 +120,7 @@
                 Top posts
               </h2>
 
-              <button type="button" class="py-1.5 px-2.5 flex items-center justify-center gap-x-1.5 border border-layer-line text-layer-foreground text-[13px] rounded-lg py-1 hover:bg-primary-50 hover:border-primary-100 hover:text-primary-700 focus:outline-none focus:bg-primary-50 focus:border-primary-100 focus:text-primary-700 dark:hover:bg-primary-500/20 dark:hover:border-primary-500/20 dark:hover:text-primary-400 dark:focus:bg-primary-500/20 dark:focus:border-primary-500/20 dark:focus:text-primary-400">
+              <button type="button" class="py-1.5 px-2.5 flex items-center justify-center gap-x-1.5 border border-layer-line text-layer-foreground text-[13px] rounded-lg py-1 hover:bg-primary-50 hover:border-primary-100 hover:text-primary-700 focus:outline-none focus:bg-primary-50 focus:border-primary-100 focus:text-primary-700">
                 <svg class="shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"></path>
                   <path d="M21 3v5h-5"></path>
@@ -167,7 +167,7 @@
                             <span class="font-medium text-sm text-foreground">
                               #1
                             </span>
-                            <span class="flex justify-center items-center gap-x-1 text-sm text-green-600 dark:text-green-500">
+                            <span class="flex justify-center items-center gap-x-1 text-sm text-green-600">
                               <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="m5 12 7-7 7 7"></path>
                                 <path d="M12 19V5"></path>
@@ -277,7 +277,7 @@
                             <span class="font-medium text-sm text-foreground">
                               2,120
                             </span>
-                            <span class="flex justify-center items-center gap-x-1 text-sm text-green-600 dark:text-green-500">
+                            <span class="flex justify-center items-center gap-x-1 text-sm text-green-600">
                               <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="m5 12 7-7 7 7"></path>
                                 <path d="M12 19V5"></path>
@@ -361,7 +361,7 @@
                             <span class="font-medium text-sm text-foreground">
                               #2
                             </span>
-                            <span class="flex justify-center items-center gap-x-1 text-sm text-red-600 dark:text-red-500">
+                            <span class="flex justify-center items-center gap-x-1 text-sm text-red-600">
                               <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M12 5v14"></path>
                                 <path d="m19 12-7 7-7-7"></path>
@@ -471,7 +471,7 @@
                             <span class="font-medium text-sm text-foreground">
                               2,001
                             </span>
-                            <span class="flex justify-center items-center gap-x-1 text-sm text-green-600 dark:text-green-500">
+                            <span class="flex justify-center items-center gap-x-1 text-sm text-green-600">
                               <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="m5 12 7-7 7 7"></path>
                                 <path d="M12 19V5"></path>
@@ -732,7 +732,7 @@
                           <span class="block font-medium text-sm text-foreground">
                             76%
                           </span>
-                          <span class="flex justify-center items-center gap-x-1 text-sm text-green-600 dark:text-green-500">
+                          <span class="flex justify-center items-center gap-x-1 text-sm text-green-600">
                             <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                               <path d="m5 12 7-7 7 7"></path>
                               <path d="M12 19V5"></path>
@@ -745,7 +745,7 @@
 
                     <!-- Button -->
                     <div class="absolute top-1/2 end-0 -translate-y-1/2">
-                      <button type="button" class="group size-7 lg:size-auto lg:py-1.5 lg:px-2 flex items-center justify-center border border-layer-line text-layer-foreground text-xs rounded-full py-1 hover:bg-primary-50 hover:border-primary-100 hover:text-primary-700 focus:outline-none focus:bg-primary-50 focus:border-primary-100 focus:text-primary-700 dark:hover:bg-primary-500/20 dark:hover:border-primary-500/20 dark:hover:text-primary-400 dark:focus:bg-primary-500/20 dark:focus:border-primary-500/20 dark:focus:text-primary-400">
+                      <button type="button" class="group size-7 lg:size-auto lg:py-1.5 lg:px-2 flex items-center justify-center border border-layer-line text-layer-foreground text-xs rounded-full py-1 hover:bg-primary-50 hover:border-primary-100 hover:text-primary-700 focus:outline-none focus:bg-primary-50 focus:border-primary-100 focus:text-primary-700">
                         <span class="lg:block hidden max-w-0 overflow-hidden whitespace-nowrap opacity-0 transition-all duration-300 group-hover:me-1 group-hover:max-w-25 group-hover:opacity-100 group-focus:me-1 group-focus:max-w-25 group-focus:opacity-100">
                           View all
                         </span>
@@ -858,12 +858,12 @@
 
                       <div class="flex flex-col justify-end items-end gap-1">
                         <div class="flex justify-end items-center gap-1">
-                          <span class="shrink-0 w-1 h-3.5 inline-block bg-orange-500 rounded-full dark:bg-orange-400"></span>
-                          <span class="shrink-0 w-1 h-3.5 inline-block bg-orange-500 rounded-full dark:bg-orange-400"></span>
+                          <span class="shrink-0 w-1 h-3.5 inline-block bg-orange-500 rounded-full"></span>
+                          <span class="shrink-0 w-1 h-3.5 inline-block bg-orange-500 rounded-full"></span>
                           <span class="shrink-0 w-1 h-3.5 inline-block bg-surface-2 rounded-full"></span>
                         </div>
 
-                        <p class="text-sm text-orange-500 dark:text-orange-400">
+                        <p class="text-sm text-orange-500">
                           Poor
                         </p>
                       </div>
