@@ -13,6 +13,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        //cabang
+        $this->call(CabangSeeder::class);
+        
         // ROLE
         $ownerRole = Role::create(['name' => 'owner']);
         $manajerRole = Role::create(['name' => 'manajer']);
@@ -46,5 +49,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $kasir->assignRole($kasirRole);
+
+        
     }
 }
