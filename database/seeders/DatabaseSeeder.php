@@ -53,6 +53,7 @@ class DatabaseSeeder extends Seeder
         //kategori
         $this->call(KategoriBarangSeeder::class);
 
-        
+        //barang
+        $this->call(BarangSeeder::class);
     }
 }
