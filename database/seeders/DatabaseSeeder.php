@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,24 +13,38 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Membuat Role
-        $adminRole = Role::create(['name' => 'admin']);
-        $userRole = Role::create(['name' => 'user']);
+        // ROLE
+        $ownerRole = Role::create(['name' => 'owner']);
+        $manajerRole = Role::create(['name' => 'manajer']);
+        $supervisorRole = Role::create(['name' => 'supervisor']);
+        $kasirRole = Role::create(['name' => 'kasir']);
+        $gudangRole = Role::create(['name' => 'gudang']);
 
-        // Membuat Admin
-        $admin = User::create([
-            'name' => 'Administrator',
-            'email' => 'admin@gmail.com',
+        // USER OWNER
+        $owner = User::create([
+            'name' => 'Pak Jayusman',
+            'email' => 'owner@gmail.com',
             'password' => bcrypt('password'),
         ]);
-        $admin->assignRole($adminRole);
 
-        // Membuat User Biasa
-        $user = User::create([
-            'name' => 'User Biasa',
-            'email' => 'user@gmail.com',
+        $owner->assignRole($ownerRole);
+
+        // USER MANAJER
+        $manajer = User::create([
+            'name' => 'Manajer Toko',
+            'email' => 'manajer@gmail.com',
             'password' => bcrypt('password'),
         ]);
-        $user->assignRole($userRole);
+
+        $manajer->assignRole($manajerRole);
+
+        // USER KASIR
+        $kasir = User::create([
+            'name' => 'Kasir',
+            'email' => 'kasir@gmail.com',
+            'password' => bcrypt('password'),
+        ]);
+
+        $kasir->assignRole($kasirRole);
     }
 }
