@@ -61,5 +61,9 @@ class DatabaseSeeder extends Seeder
 
         //transaksi
         $this->call(TransaksiSeeder::class);
+
+        //stok masuk & keluar
+        $this->call(StokMasukSeeder::class);
+        $this->call(StokKeluarSeeder::class);
     }
 }
