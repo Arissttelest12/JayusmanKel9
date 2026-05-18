@@ -55,5 +55,8 @@ class DatabaseSeeder extends Seeder
 
         //barang
         $this->call(BarangSeeder::class);
+
+        //stok
+        $this->call(StokBarangSeeder::class);
     }
 }
