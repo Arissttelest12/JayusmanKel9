@@ -50,6 +50,15 @@ class DatabaseSeeder extends Seeder
 
         $kasir->assignRole($kasirRole);
 
+        // USER ADMIN
+        $admin = User::create([
+            'name' => 'Admin',
+            'email' => 'admin@gmail.com',
+            'password' => bcrypt('password'),
+        ]);
+
+        $admin->assignRole($ownerRole);
+
         //kategori
         $this->call(KategoriBarangSeeder::class);
 

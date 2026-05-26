@@ -5,17 +5,17 @@
 ])
 
 @php
-    $baseClasses = 'px-3 py-1 rounded font-semibold transition-colors duration-200';
+    $baseClasses = 'inline-flex items-center justify-center px-4 py-2 rounded-xl font-semibold text-sm transition-all duration-300 ease-out transform hover:-translate-y-0.5 active:scale-95 focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-slate-900';
     
     $variantClasses = match($variant) {
-        'primary' => 'bg-blue-500 text-white hover:bg-blue-600',
-        'success' => 'bg-green-500 text-white hover:bg-green-600',
-        'danger' => 'bg-red-500 text-white hover:bg-red-600',
-        'secondary' => 'bg-gray-500 text-white hover:bg-gray-600',
-        'primary-text' => 'text-blue-500 hover:text-blue-600 hover:underline',
-        'success-text' => 'text-green-500 hover:text-green-600 hover:underline',
-        'danger-text' => 'text-red-500 hover:text-red-600 hover:underline',
-        default => 'bg-gray-400 text-white hover:bg-gray-500',
+        'primary' => 'bg-[#00ADB5] text-white hover:bg-[#00838F] hover:shadow-lg hover:shadow-[#00ADB5]/30 focus:ring-[#00ADB5]',
+        'success' => 'bg-emerald-500 text-white hover:bg-emerald-600 hover:shadow-lg hover:shadow-emerald-500/30 focus:ring-emerald-500',
+        'danger' => 'bg-rose-500 text-white hover:bg-rose-600 hover:shadow-lg hover:shadow-rose-500/30 focus:ring-rose-500',
+        'secondary' => 'bg-slate-100 text-slate-700 hover:bg-slate-200 focus:ring-slate-400 border border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700 dark:hover:bg-slate-700 dark:focus:ring-slate-600',
+        'primary-text' => 'text-[#00ADB5] hover:text-[#00838F] bg-transparent hover:bg-[#00ADB5]/10 dark:hover:bg-[#00ADB5]/20 px-3',
+        'success-text' => 'text-emerald-500 hover:text-emerald-600 bg-transparent hover:bg-emerald-50 dark:hover:bg-emerald-500/20 px-3',
+        'danger-text' => 'text-rose-500 hover:text-rose-600 bg-transparent hover:bg-rose-50 dark:hover:bg-rose-500/20 px-3',
+        default => 'bg-slate-400 text-white hover:bg-slate-500 focus:ring-slate-400 dark:bg-slate-600 dark:hover:bg-slate-500',
     };
 @endphp
 
