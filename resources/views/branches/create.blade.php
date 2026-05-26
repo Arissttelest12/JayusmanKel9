@@ -1,43 +1,41 @@
-@extends('layouts.app')
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="text-2xl font-bold text-slate-800">Tambah Cabang</h2>
+    </x-slot>
 
-@section('title', 'Tambah Cabang')
-@section('header-title', 'Tambah Cabang')
+    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 max-w-2xl">
+        @if ($errors->any())
+        <div class="bg-rose-50 border border-rose-200 text-rose-700 px-4 py-3 rounded-xl mb-6">
+            <ul class="list-disc list-inside">
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+        @endif
 
-@section('content')
-<div class="bg-white p-6 rounded shadow max-w-md">
-    <h2 class="text-2xl font-bold mb-6">Form Tambah Cabang</h2>
+        <form action="{{ route('branches.store') }}" method="POST" class="space-y-6">
+            @csrf
+            
+            <div>
+                <x-input-label for="nama_cabang" value="Nama Cabang" />
+                <x-text-input id="nama_cabang" name="nama_cabang" type="text" class="block w-full" value="{{ old('nama_cabang') }}" required autofocus />
+            </div>
 
-    @if ($errors->any())
-    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-        <ul>
-            @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-            @endforeach
-        </ul>
+            <div>
+                <x-input-label for="kota" value="Kota" />
+                <x-text-input id="kota" name="kota" type="text" class="block w-full" value="{{ old('kota') }}" required />
+            </div>
+
+            <div>
+                <x-input-label for="alamat" value="Alamat" />
+                <textarea id="alamat" name="alamat" rows="4" class="block w-full border-slate-300 focus:border-[#00ADB5] focus:ring-[#00ADB5] rounded-xl shadow-sm transition-all duration-300 ease-out hover:border-slate-400" required>{{ old('alamat') }}</textarea>
+            </div>
+
+            <div class="flex items-center gap-4 pt-2">
+                <x-primary-button>Simpan</x-primary-button>
+                <a href="{{ route('branches.index') }}" class="inline-flex items-center px-4 py-2 bg-slate-100 border border-slate-200 rounded-xl font-semibold text-xs text-slate-700 uppercase tracking-widest shadow-sm hover:bg-slate-200 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 transition-all ease-out duration-300 transform hover:-translate-y-0.5 active:scale-95">Batal</a>
+            </div>
+        </form>
     </div>
-    @endif
-
-    <form action="{{ route('branches.store') }}" method="POST">
-        @csrf
-        <div class="mb-4">
-            <label for="nama_cabang" class="block text-sm font-medium text-gray-700">Nama Cabang</label>
-            <input type="text" name="nama_cabang" id="nama_cabang" value="{{ old('nama_cabang') }}" class="w-full px-3 py-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500">
-        </div>
-
-        <div class="mb-4">
-            <label for="kota" class="block text-sm font-medium text-gray-700">Kota</label>
-            <input type="text" name="kota" id="kota" value="{{ old('kota') }}" class="w-full px-3 py-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500">
-        </div>
-
-        <div class="mb-6">
-            <label for="alamat" class="block text-sm font-medium text-gray-700">Alamat</label>
-            <textarea name="alamat" id="alamat" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500">{{ old('alamat') }}</textarea>
-        </div>
-
-        <div class="flex gap-2">
-            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Simpan</button>
-            <a href="{{ route('branches.index') }}" class="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500">Batal</a>
-        </div>
-    </form>
-</div>
-@endsection
+</x-app-layout>
