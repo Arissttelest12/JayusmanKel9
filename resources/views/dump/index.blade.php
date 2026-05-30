@@ -1,5 +1,0 @@
-@include('partials.header')
-
-@include('partials.content')
-
-@include('partials.footer')
