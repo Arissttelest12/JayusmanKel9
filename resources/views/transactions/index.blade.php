@@ -26,7 +26,6 @@
                         <th class="px-6 py-4 text-left font-semibold">Kasir</th>
                         <th class="px-6 py-4 text-left font-semibold">Tanggal</th>
                         <th class="px-6 py-4 text-right font-semibold">Total Harga</th>
-                        <th class="px-6 py-4 text-center font-semibold">Status Validasi</th>
                         <th class="px-6 py-4 text-left font-semibold">Metode Pembayaran</th>
                         <th class="px-6 py-4 text-center font-semibold rounded-tr-xl">Aksi</th>
                     </tr>
@@ -39,19 +38,6 @@
                         <td class="px-6 py-4">{{ $transaksi->kasir?->name ?? '-' }}</td>
                         <td class="px-6 py-4">{{ $transaksi->tanggal_transaksi->format('d/m/Y') }}</td>
                         <td class="px-6 py-4 text-right font-semibold">Rp {{ number_format($transaksi->total_harga, 0, ',', '.') }}</td>
-                        <td class="px-6 py-4 text-center">
-                            @php
-                                $statusColors = [
-                                    'pending' => 'bg-amber-100 text-amber-700',
-                                    'valid' => 'bg-emerald-100 text-emerald-700',
-                                    'invalid' => 'bg-rose-100 text-rose-700'
-                                ];
-                                $statusColor = $statusColors[$transaksi->status_validasi] ?? 'bg-slate-100 text-slate-700';
-                            @endphp
-                            <span class="px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider {{ $statusColor }}">
-                                {{ $transaksi->status_validasi }}
-                            </span>
-                        </td>
                         <td class="px-6 py-4">
                             <span class="px-3 py-1 rounded-full text-xs font-medium {{ $transaksi->metode_pembayaran == 'Cash' || $transaksi->metode_pembayaran == 'Tunai' ? 'bg-emerald-100 text-emerald-700' : 'bg-blue-100 text-blue-700' }}">
                                 {{ $transaksi->metode_pembayaran }}
@@ -61,27 +47,6 @@
                             <a href="{{ route('transactions.show', $transaksi->id_transaksi) }}" class="inline-flex items-center px-3 py-1.5 bg-blue-50 text-blue-600 rounded-lg text-sm hover:bg-blue-100 transition-colors">
                                 Lihat
                             </a>
-                            
-                            @can('validate_transactions')
-                                @if($transaksi->status_validasi === 'pending')
-                                    <form action="{{ route('transactions.validate', $transaksi->id_transaksi) }}" method="POST" class="inline">
-                                        @csrf
-                                        @method('PATCH')
-                                        <input type="hidden" name="status_validasi" value="valid">
-                                        <button type="submit" class="inline-flex items-center px-3 py-1.5 bg-emerald-100 text-emerald-700 rounded-lg text-sm hover:bg-emerald-200 transition-colors" onclick="return confirm('Validasi transaksi ini?')">
-                                            Valid
-                                        </button>
-                                    </form>
-                                    <form action="{{ route('transactions.validate', $transaksi->id_transaksi) }}" method="POST" class="inline">
-                                        @csrf
-                                        @method('PATCH')
-                                        <input type="hidden" name="status_validasi" value="invalid">
-                                        <button type="submit" class="inline-flex items-center px-3 py-1.5 bg-rose-100 text-rose-700 rounded-lg text-sm hover:bg-rose-200 transition-colors" onclick="return confirm('Tandai transaksi ini invalid?')">
-                                            Invalid
-                                        </button>
-                                    </form>
-                                @endif
-                            @endcan
 
                             @unless(Auth::user()->hasRole(['Kasir', 'kasir']))
                             <a href="{{ route('transactions.edit', $transaksi->id_transaksi) }}" class="inline-flex items-center px-3 py-1.5 bg-amber-100 text-amber-700 rounded-lg text-sm hover:bg-amber-200 transition-colors">

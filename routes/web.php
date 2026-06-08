@@ -38,7 +38,6 @@ Route::middleware('auth')->group(function () {
 
     // Transactions Routes
     Route::get('transactions/barang-cabang/{id_cabang}', [TransaksiController::class, 'getBarangByCabang'])->name('transactions.barang_cabang');
-    Route::patch('transactions/{transaksi}/validate', [TransaksiController::class, 'validateTransaksi'])->name('transactions.validate');
     Route::resource('transactions', TransaksiController::class)->parameters(['transactions' => 'transaksi']);
 
     // Stock In Routes
@@ -48,7 +47,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('stock-out', StokKeluarController::class)->parameters(['stock-out' => 'stokKeluar']);
 
     // Users Routes
-    Route::resource('users', UserController::class);
+    Route::resource('users', UserController::class)->middleware('permission:manage_users');
 
     // Reports Routes
     Route::get('/reports', function () {

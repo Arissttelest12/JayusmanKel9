@@ -28,6 +28,18 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        // If the authenticated user has role 'kasir' (case-insensitive), send them to the POS
+        $user = Auth::user();
+        if ($user) {
+            $roles = $user->getRoleNames();
+            foreach ($roles as $r) {
+                if (strtolower($r) === 'kasir') {
+                    // Force direct redirect to POS instead of honoring any intended URL
+                    return redirect()->route('transactions.create');
+                }
+            }
+        }
+
         return redirect()->intended(route('dashboard', absolute: false));
     }
 

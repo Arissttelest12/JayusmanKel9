@@ -11,12 +11,6 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-    public function __construct()
-    {
-        // Enforce permission for all user management actions
-        $this->middleware('permission:manage_users');
-    }
-
     public function index()
     {
         $user = Auth::user();

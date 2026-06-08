@@ -118,7 +118,6 @@
                 </a>
             </div>
         </div>
-        </div>
         @endif
 
         <!-- Group: OPERASIONAL -->

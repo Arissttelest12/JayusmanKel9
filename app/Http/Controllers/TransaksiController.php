@@ -15,12 +15,13 @@ class TransaksiController extends Controller
 {
     public function index()
     {
-        $query = Transaksi::with(['cabang', 'kasir']);
-        
-        if (Auth::user()->hasRole('kasir')) {
-            $query->where('id_cabang', Auth::user()->id_cabang);
+        // If the user is a kasir, always send them to the POS create page
+        $user = Auth::user();
+        if ($user && $user->hasRole('kasir')) {
+            return redirect()->route('transactions.create');
         }
-        
+
+        $query = Transaksi::with(['cabang', 'kasir']);
         $transaksis = $query->latest('tanggal_transaksi')->paginate(15);
         return view('transactions.index', compact('transaksis'));
     }
@@ -127,21 +128,6 @@ class TransaksiController extends Controller
         return redirect()->route('transactions.index')->with('success', 'Transaksi berhasil diperbarui');
     }
 
-    public function validateTransaksi(Request $request, Transaksi $transaksi)
-    {
-        // Require validate_transactions permission
-        if (!Auth::user()->can('validate_transactions')) {
-            abort(403, 'Unauthorized action.');
-        }
-
-        $validated = $request->validate([
-            'status_validasi' => 'required|in:pending,valid,invalid',
-        ]);
-
-        $transaksi->update(['status_validasi' => $validated['status_validasi']]);
-
-        return redirect()->route('transactions.index')->with('success', 'Status validasi transaksi berhasil diperbarui.');
-    }
 
     public function destroy(Transaksi $transaksi)
     {

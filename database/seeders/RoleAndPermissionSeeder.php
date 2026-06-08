@@ -27,7 +27,6 @@ class RoleAndPermissionSeeder extends Seeder
             'manage_stock_in_out',
             'view_transactions',
             'create_transactions',
-            'validate_transactions',
             'view_reports',
         ];
 
@@ -53,10 +52,9 @@ class RoleAndPermissionSeeder extends Seeder
             'view_transactions'
         ]);
 
-        // Assign permissions to Supervisor (view & validate transactions)
+        // Assign permissions to Supervisor (view transactions)
         $supervisor->syncPermissions([
-            'view_transactions',
-            'validate_transactions'
+            'view_transactions'
         ]);
 
         // Assign permissions to Kasir (only POS / create_transactions)
