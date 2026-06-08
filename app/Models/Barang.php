@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Barang extends Model
 {
+    use \App\Traits\HasAuditTrail;
     protected $table = 'barang';
     protected $primaryKey = 'id_barang';
     protected $fillable = ['id_kategori', 'kode_barang', 'nama_barang', 'harga_beli', 'harga_jual', 'satuan'];

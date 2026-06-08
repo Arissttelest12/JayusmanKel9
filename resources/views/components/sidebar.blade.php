@@ -215,6 +215,17 @@
                         <span class="ml-auto w-1.5 h-1.5 bg-[#00ADB5] rounded-full active-dot animate-pulse"></span>
                     @endif
                 </a>
+
+                @if(
+                    (auth()->check() && auth()->user()->hasRole('admin')) ||
+                    (auth()->check() && auth()->user()->hasRole(['Owner','owner'])) ||
+                    auth()->user()->can('manage_users')
+                )
+                <a href="{{ route('audit-trails.index') }}" class="group sidebar-nav-link flex items-center space-x-3 px-3 py-2.5 rounded-xl {{ request()->routeIs('audit-trails.*') ? 'active' : '' }}">
+                    <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h18v18H3z"/></svg>
+                    <span>Audit log</span>
+                </a>
+                @endif
             </div>
         </div>
         @endcan

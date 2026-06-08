@@ -77,5 +77,8 @@ class DatabaseSeeder extends Seeder
 
         //log
         $this->call(LogAktivitasSeeder::class);
+
+        // dummy data via factories (users, cabang, transaksi)
+        $this->call(FactoryDummySeeder::class);
     }
 }

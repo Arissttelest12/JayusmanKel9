@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class StokMasuk extends Model
 {
+    use \App\Traits\HasAuditTrail;
     protected $table = 'stok_masuk';
     protected $primaryKey = 'id_stok_masuk';
     protected $fillable = ['id_cabang', 'id_barang', 'id_user', 'jumlah', 'tanggal_masuk', 'keterangan'];

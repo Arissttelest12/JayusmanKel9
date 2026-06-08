@@ -10,6 +10,7 @@ use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\StokMasukController;
 use App\Http\Controllers\StokKeluarController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuditTrailController;
 
 Route::get('/', function () {
     return redirect()->route('dashboard');
@@ -89,6 +90,9 @@ Route::middleware('auth')->group(function () {
 
     // Users Routes
     Route::resource('users', UserController::class)->middleware('permission:manage_users');
+
+    // Audit Trails
+    Route::get('audit-trails', [AuditTrailController::class, 'index'])->name('audit-trails.index');
 
     // Reports Routes
     Route::get('/reports', [App\Http\Controllers\ReportController::class, 'index'])->name('reports.index');

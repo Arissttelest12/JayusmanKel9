@@ -20,13 +20,21 @@ class LaporanPenjualanExport implements FromCollection, WithHeadings
 
     public function collection()
     {
-        $query = Transaksi::select('id_transaksi','id_cabang','id_kasir','tanggal_transaksi','total_harga');
+        $query = Transaksi::with(['cabang','kasir'])->select('id_transaksi','id_cabang','id_kasir','tanggal_transaksi','total_harga');
         if (Auth::user()->hasRole(['manager','Manager'])) {
             $query->where('id_cabang', Auth::user()->id_cabang);
         }
         if ($this->from) $query->whereDate('tanggal_transaksi', '>=', $this->from);
         if ($this->to) $query->whereDate('tanggal_transaksi', '<=', $this->to);
-        return $query->get();
+        return $query->get()->map(function($t){
+            return [
+                'ID' => $t->id_transaksi,
+                'Cabang' => $t->cabang?->nama_cabang ?? '-',
+                'Kasir' => $t->kasir?->name ?? '-',
+                'Tanggal' => $t->tanggal_transaksi,
+                'Total' => $t->total_harga,
+            ];
+        });
     }
 
     public function headings(): array

@@ -89,11 +89,6 @@
     </form>
 
     <!-- Register Link -->
-    <div class="mt-8 pt-6 border-t border-slate-100 text-center text-sm text-slate-500 font-medium">
-        Belum memiliki akun? 
-        <a href="{{ route('register') }}" class="font-bold text-[#00ADB5] hover:text-[#00838F] transition-colors duration-200">
-            Daftar Sekarang
-        </a>
-    </div>
+
 </x-guest-layout>
 

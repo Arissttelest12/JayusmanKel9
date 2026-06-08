@@ -26,13 +26,23 @@ class ReportController extends Controller
         $queryParams = compact('from', 'to');
 
         if ($type === 'penjualan') {
-            $query = Transaksi::with('detailTransaksi');
+            $query = Transaksi::with(['detailTransaksi','cabang','kasir']);
             if (Auth::user()->hasRole(['manager','Manager'])) {
                 $query->where('id_cabang', Auth::user()->id_cabang);
             }
             if ($from) $query->whereDate('tanggal_transaksi', '>=', $from);
             if ($to) $query->whereDate('tanggal_transaksi', '<=', $to);
-            $data = $query->get();
+            $data = $query->get()->map(function($t){
+                return (object)[
+                    'id_transaksi' => $t->id_transaksi,
+                    'id_cabang' => $t->id_cabang,
+                    'cabang_name' => $t->cabang?->nama_cabang ?? '-',
+                    'id_kasir' => $t->id_kasir,
+                    'kasir_name' => $t->kasir?->name ?? '-',
+                    'tanggal_transaksi' => $t->tanggal_transaksi,
+                    'total_harga' => $t->total_harga,
+                ];
+            });
         } elseif ($type === 'stok') {
             $query = StokBarang::with('barang');
             if (Auth::user()->hasRole(['manager','Manager'])) {
