@@ -12,13 +12,21 @@ class StokMasukController extends Controller
 {
     public function index()
     {
-        $stokmasuks = StokMasuk::with(['cabang', 'barang', 'user'])->paginate(15);
+        $query = StokMasuk::with(['cabang', 'barang', 'user']);
+        if (!auth()->user()->hasRole(['owner', 'Owner'])) {
+            $query->where('id_cabang', auth()->user()->id_cabang);
+        }
+        $stokmasuks = $query->paginate(15);
         return view('stock-in.index', compact('stokmasuks'));
     }
 
     public function create()
     {
-        $cabangs = Cabang::all();
+        if (auth()->user()->hasRole(['owner', 'Owner'])) {
+            $cabangs = Cabang::all();
+        } else {
+            $cabangs = Cabang::where('id_cabang', auth()->user()->id_cabang)->get();
+        }
         $barangs = Barang::all();
         $users = User::all();
         return view('stock-in.create', compact('cabangs', 'barangs', 'users'));
@@ -41,7 +49,15 @@ class StokMasukController extends Controller
 
     public function edit(StokMasuk $stokMasuk)
     {
-        $cabangs = Cabang::all();
+        if (!auth()->user()->hasRole(['owner', 'Owner']) && $stokMasuk->id_cabang !== auth()->user()->id_cabang) {
+            abort(403, 'Akses terbatas ke cabang lain.');
+        }
+
+        if (auth()->user()->hasRole(['owner', 'Owner'])) {
+            $cabangs = Cabang::all();
+        } else {
+            $cabangs = Cabang::where('id_cabang', auth()->user()->id_cabang)->get();
+        }
         $barangs = Barang::all();
         $users = User::all();
         return view('stock-in.edit', compact('stokMasuk', 'cabangs', 'barangs', 'users'));
@@ -49,6 +65,10 @@ class StokMasukController extends Controller
 
     public function update(Request $request, StokMasuk $stokMasuk)
     {
+        if (!auth()->user()->hasRole(['owner', 'Owner']) && $stokMasuk->id_cabang !== auth()->user()->id_cabang) {
+            abort(403, 'Akses terbatas ke cabang lain.');
+        }
+
         $validated = $request->validate([
             'id_cabang' => 'required|exists:cabang,id_cabang',
             'id_barang' => 'required|exists:barang,id_barang',
@@ -64,6 +84,9 @@ class StokMasukController extends Controller
 
     public function destroy(StokMasuk $stokMasuk)
     {
+        if (!auth()->user()->hasRole(['owner', 'Owner']) && $stokMasuk->id_cabang !== auth()->user()->id_cabang) {
+            abort(403, 'Akses terbatas ke cabang lain.');
+        }
         $stokMasuk->delete();
         return redirect()->route('stock-in.index')->with('success', 'Stok masuk berhasil dihapus');
     }

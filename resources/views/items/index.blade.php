@@ -43,12 +43,16 @@
                     <td class="border border-gray-300 px-4 py-2 text-right">Rp {{ number_format($barang->harga_jual, 0, ',', '.') }}</td>
                     <td class="border border-gray-300 px-4 py-2">{{ $barang->satuan }}</td>
                     <td class="border border-gray-300 px-4 py-2 text-center">
+                        @hasanyrole('owner|Owner')
                         <a href="{{ route('items.edit', $barang->id_barang) }}" class="bg-yellow-500 text-white px-3 py-1 rounded text-sm hover:bg-yellow-600 inline-block">Edit</a>
                         <form action="{{ route('items.destroy', $barang->id_barang) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="bg-red-600 text-white px-3 py-1 rounded text-sm hover:bg-red-700" onclick="return confirm('Hapus barang ini?')">Hapus</button>
                         </form>
+                        @else
+                        <span class="text-gray-400 text-xs italic">Akses Terbatas</span>
+                        @endhasanyrole
                     </td>
                 </tr>
                 @empty

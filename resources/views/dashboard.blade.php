@@ -390,10 +390,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Trigger Counters with slight staggering
-    setTimeout(() => animateCounter('counter-cabang', 0, 3, 1000), 100);
-    setTimeout(() => animateCounter('counter-transaksi', 0, 125, 1400), 200);
-    setTimeout(() => animateCounter('counter-stok', 0, 342, 1600), 300);
-    setTimeout(() => animateCounter('counter-user', 0, 8, 1200), 400);
+    setTimeout(() => animateCounter('counter-cabang', 0, @json($totalCabang ?? 0), 1000), 100);
+    setTimeout(() => animateCounter('counter-transaksi', 0, @json($totalTransaksiThisMonth ?? 0), 1400), 200);
+    setTimeout(() => animateCounter('counter-stok', 0, @json($stokTotalItems ?? 0), 1600), 300);
+    setTimeout(() => animateCounter('counter-user', 0, @json($totalUsers ?? 0), 1200), 400);
 
     // Chart initialization
     const ctx = document.getElementById('salesChart').getContext('2d');
@@ -409,7 +409,7 @@ document.addEventListener('DOMContentLoaded', function() {
             labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
             datasets: [{
                 label: 'Penjualan',
-                data: [12000000, 19000000, 15000000, 25000000, 22000000, 30000000, 28000000, 35000000, 32000000, 40000000, 38000000, 45000000],
+                data: {!! json_encode($monthlyData ?? array_fill(0,12,0)) !!},
                 borderColor: '#00ADB5',
                 borderWidth: 3,
                 pointBackgroundColor: '#00ADB5',

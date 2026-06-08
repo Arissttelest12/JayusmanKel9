@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\StokBarang;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 
 class TransaksiController extends Controller
@@ -86,8 +87,11 @@ class TransaksiController extends Controller
                     'subtotal' => $subtotal,
                 ]);
 
-                // Kurangi stok
+                // Kurangi stok (log sebelum & sesudah untuk debugging)
+                Log::info('Stok before decrement', ['id_stok' => $stok->id_stok, 'jumlah_stok' => $stok->jumlah_stok, 'decrement' => $item['jumlah']]);
                 $stok->decrement('jumlah_stok', $item['jumlah']);
+                $stok->refresh();
+                Log::info('Stok after decrement', ['id_stok' => $stok->id_stok, 'jumlah_stok' => $stok->jumlah_stok]);
             }
 
             // Update total harga

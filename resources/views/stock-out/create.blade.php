@@ -1,73 +1,96 @@
-@extends('layouts.app')
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="text-2xl font-bold text-slate-800">Tambah Stok Keluar</h2>
+    </x-slot>
 
-@section('title', 'Tambah Stok Keluar')
-@section('header-title', 'Tambah Stok Keluar')
+    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 max-w-3xl mx-auto">
+        
+        @if ($errors->any())
+        <div class="bg-rose-50 border border-rose-200 text-rose-700 px-4 py-3 rounded-xl mb-6">
+            <ul class="list-disc pl-5">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+        @endif
 
-@section('content')
-<div class="bg-white p-6 rounded shadow max-w-lg">
-    <h2 class="text-2xl font-bold mb-6">Form Tambah Stok Keluar</h2>
+        <form action="{{ route('stock-out.store') }}" method="POST">
+            @csrf
 
-    @if ($errors->any())
-    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-        <ul>
-            @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-            @endforeach
-        </ul>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <!-- Cabang -->
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Cabang</label>
+                    <select name="id_cabang" required 
+                            class="w-full rounded-xl border-slate-300 focus:border-[#00ADB5] focus:ring-[#00ADB5]">
+                        <option value="">-- Pilih Cabang --</option>
+                        @foreach($cabangs as $cabang)
+                        <option value="{{ $cabang->id_cabang }}" {{ old('id_cabang', auth()->user()->id_cabang) == $cabang->id_cabang ? 'selected' : '' }}>
+                            {{ $cabang->nama_cabang }}
+                        </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <!-- Barang -->
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Barang</label>
+                    <select name="id_barang" required 
+                            class="w-full rounded-xl border-slate-300 focus:border-[#00ADB5] focus:ring-[#00ADB5]">
+                        <option value="">-- Pilih Barang --</option>
+                        @foreach($barangs as $barang)
+                        <option value="{{ $barang->id_barang }}" {{ old('id_barang') == $barang->id_barang ? 'selected' : '' }}>
+                            {{ $barang->nama_barang }}
+                        </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <!-- User/Penanggung Jawab -->
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Penanggung Jawab</label>
+                    <select name="id_user" required 
+                            class="w-full rounded-xl border-slate-300 focus:border-[#00ADB5] focus:ring-[#00ADB5]">
+                        <option value="">-- Pilih User --</option>
+                        @foreach($users as $user)
+                        <option value="{{ $user->id }}" {{ old('id_user', auth()->user()->id) == $user->id ? 'selected' : '' }}>
+                            {{ $user->name }}
+                        </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <!-- Tanggal Keluar -->
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Tanggal Keluar</label>
+                    <input type="date" name="tanggal_keluar" value="{{ old('tanggal_keluar', date('Y-m-d')) }}" required 
+                           class="w-full rounded-xl border-slate-300 focus:border-[#00ADB5] focus:ring-[#00ADB5]">
+                </div>
+
+                <!-- Jumlah -->
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Jumlah</label>
+                    <input type="number" name="jumlah" value="{{ old('jumlah') }}" required min="1" 
+                           class="w-full rounded-xl border-slate-300 focus:border-[#00ADB5] focus:ring-[#00ADB5]">
+                </div>
+
+                <!-- Alasan -->
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Alasan / Keterangan</label>
+                    <textarea name="alasan" rows="3" 
+                              class="w-full rounded-xl border-slate-300 focus:border-[#00ADB5] focus:ring-[#00ADB5]">{{ old('alasan') }}</textarea>
+                </div>
+            </div>
+
+            <div class="flex justify-end space-x-3 pt-6 border-t border-slate-100">
+                <a href="{{ route('stock-out.index') }}" class="px-6 py-2.5 rounded-xl border border-slate-300 text-slate-600 font-semibold hover:bg-slate-50 transition-colors">
+                    Batal
+                </a>
+                <button type="submit" class="px-6 py-2.5 rounded-xl bg-[#00ADB5] text-white font-semibold hover:bg-[#00838F] shadow-lg shadow-[#00ADB5]/30 transition-all">
+                    Simpan Stok Keluar
+                </button>
+            </div>
+        </form>
     </div>
-    @endif
-
-    <form action="{{ route('stock-out.store') }}" method="POST">
-        @csrf
-        <div class="mb-4">
-            <label for="id_cabang" class="block text-sm font-medium text-gray-700">Cabang</label>
-            <select name="id_cabang" id="id_cabang" class="w-full px-3 py-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                <option value="">-- Pilih Cabang --</option>
-                @foreach($cabangs as $cabang)
-                <option value="{{ $cabang->id_cabang }}" {{ old('id_cabang') == $cabang->id_cabang ? 'selected' : '' }}>{{ $cabang->nama_cabang }}</option>
-                @endforeach
-            </select>
-        </div>
-
-        <div class="mb-4">
-            <label for="id_barang" class="block text-sm font-medium text-gray-700">Barang</label>
-            <select name="id_barang" id="id_barang" class="w-full px-3 py-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                <option value="">-- Pilih Barang --</option>
-                @foreach($barangs as $barang)
-                <option value="{{ $barang->id_barang }}" {{ old('id_barang') == $barang->id_barang ? 'selected' : '' }}>{{ $barang->nama_barang }}</option>
-                @endforeach
-            </select>
-        </div>
-
-        <div class="mb-4">
-            <label for="id_user" class="block text-sm font-medium text-gray-700">User</label>
-            <select name="id_user" id="id_user" class="w-full px-3 py-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                <option value="">-- Pilih User --</option>
-                @foreach($users as $user)
-                <option value="{{ $user->id }}" {{ old('id_user') == $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
-                @endforeach
-            </select>
-        </div>
-
-        <div class="mb-4">
-            <label for="jumlah" class="block text-sm font-medium text-gray-700">Jumlah</label>
-            <input type="number" name="jumlah" id="jumlah" value="{{ old('jumlah') }}" class="w-full px-3 py-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500" min="1">
-        </div>
-
-        <div class="mb-4">
-            <label for="tanggal_keluar" class="block text-sm font-medium text-gray-700">Tanggal Keluar</label>
-            <input type="date" name="tanggal_keluar" id="tanggal_keluar" value="{{ old('tanggal_keluar') }}" class="w-full px-3 py-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500">
-        </div>
-
-        <div class="mb-6">
-            <label for="alasan" class="block text-sm font-medium text-gray-700">Alasan</label>
-            <textarea name="alasan" id="alasan" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500">{{ old('alasan') }}</textarea>
-        </div>
-
-        <div class="flex gap-2">
-            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Simpan</button>
-            <a href="{{ route('stock-out.index') }}" class="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500">Batal</a>
-        </div>
-    </form>
-</div>
-@endsection
+</x-app-layout>
