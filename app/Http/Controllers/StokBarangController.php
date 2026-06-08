@@ -11,13 +11,21 @@ class StokBarangController extends Controller
 {
     public function index()
     {
-        $stoks = StokBarang::with(['cabang', 'barang'])->paginate(15);
+        $query = StokBarang::with(['cabang', 'barang']);
+        if (!auth()->user()->hasRole(['owner', 'Owner'])) {
+            $query->where('id_cabang', auth()->user()->id_cabang);
+        }
+        $stoks = $query->paginate(15);
         return view('stocks.index', compact('stoks'));
     }
 
     public function create()
     {
-        $cabangs = Cabang::all();
+        if (auth()->user()->hasRole(['owner', 'Owner'])) {
+            $cabangs = Cabang::all();
+        } else {
+            $cabangs = Cabang::where('id_cabang', auth()->user()->id_cabang)->get();
+        }
         $barangs = Barang::all();
         return view('stocks.create', compact('cabangs', 'barangs'));
     }
@@ -36,13 +44,25 @@ class StokBarangController extends Controller
 
     public function edit(StokBarang $stokBarang)
     {
-        $cabangs = Cabang::all();
+        if (!auth()->user()->hasRole(['owner', 'Owner']) && $stokBarang->id_cabang !== auth()->user()->id_cabang) {
+            abort(403, 'Akses terbatas ke cabang lain.');
+        }
+
+        if (auth()->user()->hasRole(['owner', 'Owner'])) {
+            $cabangs = Cabang::all();
+        } else {
+            $cabangs = Cabang::where('id_cabang', auth()->user()->id_cabang)->get();
+        }
         $barangs = Barang::all();
         return view('stocks.edit', compact('stokBarang', 'cabangs', 'barangs'));
     }
 
     public function update(Request $request, StokBarang $stokBarang)
     {
+        if (!auth()->user()->hasRole(['owner', 'Owner']) && $stokBarang->id_cabang !== auth()->user()->id_cabang) {
+            abort(403, 'Akses terbatas ke cabang lain.');
+        }
+
         $validated = $request->validate([
             'id_cabang' => 'required|exists:cabang,id_cabang',
             'id_barang' => 'required|exists:barang,id_barang',
@@ -55,6 +75,9 @@ class StokBarangController extends Controller
 
     public function destroy(StokBarang $stokBarang)
     {
+        if (!auth()->user()->hasRole(['owner', 'Owner']) && $stokBarang->id_cabang !== auth()->user()->id_cabang) {
+            abort(403, 'Akses terbatas ke cabang lain.');
+        }
         $stokBarang->delete();
         return redirect()->route('stocks.index')->with('success', 'Stok berhasil dihapus');
     }

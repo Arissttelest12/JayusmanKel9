@@ -16,6 +16,9 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
+    if (auth()->user() && auth()->user()->hasRole(['gudang', 'Gudang'])) {
+        return redirect()->route('items.index');
+    }
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
@@ -31,7 +34,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('categories', KategoriBarangController::class)->parameters(['categories' => 'kategoriBarang']);
 
     // Items Routes
-    Route::resource('items', BarangController::class)->parameters(['items' => 'barang']);
+    Route::resource('items', BarangController::class)
+        ->parameters(['items' => 'barang'])
+        ->middleware('role:owner|gudang|Owner|Gudang');
 
     // Stock Routes
     Route::resource('stocks', StokBarangController::class)->parameters(['stocks' => 'stokBarang']);

@@ -28,7 +28,6 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        // If the authenticated user has role 'kasir' (case-insensitive), send them to the POS
         $user = Auth::user();
         if ($user) {
             $roles = $user->getRoleNames();
@@ -37,10 +36,13 @@ class AuthenticatedSessionController extends Controller
                     // Force direct redirect to POS instead of honoring any intended URL
                     return redirect()->route('transactions.create');
                 }
+                if (strtolower($r) === 'gudang') {
+                    return redirect()->route('items.index');
+                }
             }
         }
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        return redirect()->route('dashboard');
     }
 
     /**

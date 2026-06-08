@@ -55,6 +55,26 @@
             <input type="text" name="satuan" id="satuan" value="{{ old('satuan') }}" class="w-full px-3 py-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="e.g., pcs, box, kg">
         </div>
 
+        <h3 class="text-lg font-semibold mb-4 border-b pb-2">Informasi Stok Awal (Opsional)</h3>
+        
+        <div class="grid grid-cols-2 gap-4 mb-6">
+            <div>
+                <label for="id_cabang" class="block text-sm font-medium text-gray-700">Cabang</label>
+                <select name="id_cabang" id="id_cabang" class="w-full px-3 py-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <option value="">-- Pilih Cabang --</option>
+                    @foreach($cabangs as $cabang)
+                    <option value="{{ $cabang->id_cabang }}" {{ old('id_cabang', auth()->user()->id_cabang) == $cabang->id_cabang ? 'selected' : '' }}>{{ $cabang->nama_cabang }}</option>
+                    @endforeach
+                </select>
+                <p class="text-xs text-gray-500 mt-1">Pilih cabang untuk lokasi stok awal.</p>
+            </div>
+            <div>
+                <label for="jumlah_stok" class="block text-sm font-medium text-gray-700">Jumlah Stok Awal</label>
+                <input type="number" name="jumlah_stok" id="jumlah_stok" value="{{ old('jumlah_stok', 0) }}" min="0" class="w-full px-3 py-2 border border-gray-300 rounded mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <p class="text-xs text-gray-500 mt-1">Biarkan 0 jika tidak ingin menambahkan stok awal saat ini.</p>
+            </div>
+        </div>
+
         <div class="flex gap-2">
             <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Simpan</button>
             <a href="{{ route('items.index') }}" class="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500">Batal</a>
