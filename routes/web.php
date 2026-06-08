@@ -15,11 +15,47 @@ Route::get('/', function () {
     return redirect()->route('dashboard');
 });
 
+use Illuminate\Support\Facades\DB;
+use App\Models\Transaksi;
+use App\Models\StokBarang;
+use App\Models\Cabang;
+use App\Models\User;
+
 Route::get('/dashboard', function () {
     if (auth()->user() && auth()->user()->hasRole(['gudang', 'Gudang'])) {
         return redirect()->route('items.index');
     }
-    return view('dashboard');
+
+    $year = now()->year;
+
+    // Base query for transactions per month
+    $transQuery = Transaksi::selectRaw('MONTH(tanggal_transaksi) as m, SUM(total_harga) as total')
+        ->whereYear('tanggal_transaksi', $year);
+
+    if (auth()->user() && auth()->user()->hasRole(['manager','Manager'])) {
+        $transQuery->where('id_cabang', auth()->user()->id_cabang);
+    }
+
+    $monthly = $transQuery->groupBy('m')->pluck('total','m')->toArray();
+
+    $monthlyData = [];
+    for ($i=1;$i<=12;$i++) {
+        $monthlyData[] = isset($monthly[$i]) ? (int)$monthly[$i] : 0;
+    }
+
+    // Summary cards
+    $totalCabang = Cabang::count();
+    $totalUsers = User::count();
+
+    $stokTotalItems = StokBarang::sum('jumlah_stok');
+
+    $totalTransaksiThisMonth = Transaksi::whereYear('tanggal_transaksi', $year)
+        ->whereMonth('tanggal_transaksi', now()->month)
+        ->when(auth()->user() && auth()->user()->hasRole(['manager','Manager']), function ($q) {
+            $q->where('id_cabang', auth()->user()->id_cabang);
+        })->count();
+
+    return view('dashboard', compact('monthlyData','totalCabang','totalUsers','stokTotalItems','totalTransaksiThisMonth'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -55,9 +91,10 @@ Route::middleware('auth')->group(function () {
     Route::resource('users', UserController::class)->middleware('permission:manage_users');
 
     // Reports Routes
-    Route::get('/reports', function () {
-        return view('reports.index');
-    })->name('reports.index');
+    Route::get('/reports', [App\Http\Controllers\ReportController::class, 'index'])->name('reports.index');
+    Route::get('/reports/view/{type}', [App\Http\Controllers\ReportController::class, 'view'])->name('reports.view');
+    Route::get('/reports/export/pdf/{type}', [App\Http\Controllers\ReportController::class, 'exportPdf'])->name('reports.export.pdf');
+    Route::get('/reports/export/excel/{type}', [App\Http\Controllers\ReportController::class, 'exportExcel'])->name('reports.export.excel');
 });
 
 require __DIR__.'/auth.php';
