@@ -37,6 +37,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('stocks', StokBarangController::class)->parameters(['stocks' => 'stokBarang']);
 
     // Transactions Routes
+    Route::get('transactions/barang-cabang/{id_cabang}', [TransaksiController::class, 'getBarangByCabang'])->name('transactions.barang_cabang');
     Route::resource('transactions', TransaksiController::class)->parameters(['transactions' => 'transaksi']);
 
     // Stock In Routes

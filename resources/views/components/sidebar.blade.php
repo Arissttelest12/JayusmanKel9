@@ -102,6 +102,7 @@
     <!-- Navigation Menu-->
     <nav class="flex-1 px-3 py-6 space-y-7 overflow-y-auto">
         <!-- Group: UTAMA -->
+        @unless(Auth::user()->hasRole(['Kasir', 'kasir']))
         <div>
             <p class="px-3 text-[10px] font-bold uppercase tracking-widest text-[#EEEEEE]/30 mb-2">Utama</p>
             <div class="space-y-1">
@@ -117,6 +118,7 @@
                 </a>
             </div>
         </div>
+        @endunless
 
         <!-- Group: OPERASIONAL -->
         <div>
@@ -134,6 +136,7 @@
                 </a>
 
                 <!-- Menu Stok -->
+                @unless(Auth::user()->hasRole(['Kasir', 'kasir']))
                 <a href="{{ route('stocks.index') }}" class="group sidebar-nav-link flex items-center space-x-3 px-3 py-2.5 rounded-xl {{ request()->routeIs('stocks.*') ? 'active' : '' }}">
                     <svg class="w-5 h-5 nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
@@ -143,10 +146,12 @@
                         <span class="ml-auto w-1.5 h-1.5 bg-[#00ADB5] rounded-full active-dot animate-pulse"></span>
                     @endif
                 </a>
+                @endunless
             </div>
         </div>
 
         <!-- Group: DATA & LAPORAN -->
+        @unless(Auth::user()->hasRole(['Kasir', 'kasir']))
         <div>
             <p class="px-3 text-[10px] font-bold uppercase tracking-widest text-[#EEEEEE]/30 mb-2">Data & Laporan</p>
             <div class="space-y-1">
@@ -191,6 +196,7 @@
                 </a>
             </div>
         </div>
+        @endunless
     </nav>
 
     <!-- Profile Section at Bottom -->
