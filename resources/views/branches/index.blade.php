@@ -1,3 +1,4 @@
+<x-app-layout>
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h2 class="text-2xl font-bold text-slate-800 dark:text-slate-100">Daftar Cabang</h2>

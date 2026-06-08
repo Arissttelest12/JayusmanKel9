@@ -13,11 +13,11 @@
     <div class="grid grid-cols-2 gap-4 mb-6">
         <div>
             <p class="text-gray-600">Cabang</p>
-            <p class="font-semibold">{{ $transaksi->cabang->nama_cabang }}</p>
+            <p class="font-semibold">{{ $transaksi->cabang?->nama_cabang ?? '-' }}</p>
         </div>
         <div>
             <p class="text-gray-600">Kasir</p>
-            <p class="font-semibold">{{ $transaksi->kasir->name }}</p>
+            <p class="font-semibold">{{ $transaksi->kasir?->name ?? '-' }}</p>
         </div>
         <div>
             <p class="text-gray-600">Tanggal Transaksi</p>
@@ -43,7 +43,7 @@
             <tbody>
                 @forelse($transaksi->detailTransaksi as $detail)
                 <tr>
-                    <td class="border border-gray-300 px-4 py-2">{{ $detail->barang->nama_barang }}</td>
+                    <td class="border border-gray-300 px-4 py-2">{{ $detail->barang?->nama_barang ?? '-' }}</td>
                     <td class="border border-gray-300 px-4 py-2 text-right">{{ $detail->jumlah }}</td>
                     <td class="border border-gray-300 px-4 py-2 text-right">Rp {{ number_format($detail->harga_satuan, 0, ',', '.') }}</td>
                     <td class="border border-gray-300 px-4 py-2 text-right">Rp {{ number_format($detail->subtotal, 0, ',', '.') }}</td>

@@ -34,12 +34,12 @@
                     @forelse($transaksis as $transaksi)
                     <tr class="hover:bg-slate-50 transition-colors duration-200">
                         <td class="px-6 py-4">{{ $transaksi->id_transaksi }}</td>
-                        <td class="px-6 py-4 font-medium">{{ $transaksi->cabang->nama_cabang }}</td>
-                        <td class="px-6 py-4">{{ $transaksi->kasir->name }}</td>
+                        <td class="px-6 py-4 font-medium">{{ $transaksi->cabang?->nama_cabang ?? '-' }}</td>
+                        <td class="px-6 py-4">{{ $transaksi->kasir?->name ?? '-' }}</td>
                         <td class="px-6 py-4">{{ $transaksi->tanggal_transaksi->format('d/m/Y') }}</td>
                         <td class="px-6 py-4 text-right font-semibold">Rp {{ number_format($transaksi->total_harga, 0, ',', '.') }}</td>
                         <td class="px-6 py-4">
-                            <span class="px-3 py-1 rounded-full text-xs font-medium {{ $transaksi->metode_pembayaran == 'Cash' ? 'bg-emerald-100 text-emerald-700' : 'bg-blue-100 text-blue-700' }}">
+                            <span class="px-3 py-1 rounded-full text-xs font-medium {{ $transaksi->metode_pembayaran == 'Cash' || $transaksi->metode_pembayaran == 'Tunai' ? 'bg-emerald-100 text-emerald-700' : 'bg-blue-100 text-blue-700' }}">
                                 {{ $transaksi->metode_pembayaran }}
                             </span>
                         </td>
@@ -47,6 +47,8 @@
                             <a href="{{ route('transactions.show', $transaksi->id_transaksi) }}" class="inline-flex items-center px-3 py-1.5 bg-blue-50 text-blue-600 rounded-lg text-sm hover:bg-blue-100 transition-colors">
                                 Lihat
                             </a>
+
+                            @unless(Auth::user()->hasRole(['Kasir', 'kasir']))
                             <a href="{{ route('transactions.edit', $transaksi->id_transaksi) }}" class="inline-flex items-center px-3 py-1.5 bg-amber-100 text-amber-700 rounded-lg text-sm hover:bg-amber-200 transition-colors">
                                 Edit
                             </a>
@@ -57,6 +59,7 @@
                                     Hapus
                                 </button>
                             </form>
+                            @endunless
                         </td>
                     </tr>
                     @empty

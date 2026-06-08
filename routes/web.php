@@ -25,28 +25,29 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // Branches Routes
-    Route::resource('branches', CabangController::class);
+    Route::resource('branches', CabangController::class)->parameters(['branches' => 'cabang']);
 
     // Categories Routes
-    Route::resource('categories', KategoriBarangController::class);
+    Route::resource('categories', KategoriBarangController::class)->parameters(['categories' => 'kategoriBarang']);
 
     // Items Routes
-    Route::resource('items', BarangController::class);
+    Route::resource('items', BarangController::class)->parameters(['items' => 'barang']);
 
     // Stock Routes
-    Route::resource('stocks', StokBarangController::class);
+    Route::resource('stocks', StokBarangController::class)->parameters(['stocks' => 'stokBarang']);
 
     // Transactions Routes
-    Route::resource('transactions', TransaksiController::class);
+    Route::get('transactions/barang-cabang/{id_cabang}', [TransaksiController::class, 'getBarangByCabang'])->name('transactions.barang_cabang');
+    Route::resource('transactions', TransaksiController::class)->parameters(['transactions' => 'transaksi']);
 
     // Stock In Routes
-    Route::resource('stock-in', StokMasukController::class);
+    Route::resource('stock-in', StokMasukController::class)->parameters(['stock-in' => 'stokMasuk']);
 
     // Stock Out Routes
-    Route::resource('stock-out', StokKeluarController::class);
+    Route::resource('stock-out', StokKeluarController::class)->parameters(['stock-out' => 'stokKeluar']);
 
     // Users Routes
-    Route::get('/users', [UserController::class, 'index'])->name('users.index');
+    Route::resource('users', UserController::class)->middleware('permission:manage_users');
 
     // Reports Routes
     Route::get('/reports', function () {
