@@ -127,6 +127,22 @@ class TransaksiController extends Controller
         return redirect()->route('transactions.index')->with('success', 'Transaksi berhasil diperbarui');
     }
 
+    public function validateTransaksi(Request $request, Transaksi $transaksi)
+    {
+        // Require validate_transactions permission
+        if (!Auth::user()->can('validate_transactions')) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        $validated = $request->validate([
+            'status_validasi' => 'required|in:pending,valid,invalid',
+        ]);
+
+        $transaksi->update(['status_validasi' => $validated['status_validasi']]);
+
+        return redirect()->route('transactions.index')->with('success', 'Status validasi transaksi berhasil diperbarui.');
+    }
+
     public function destroy(Transaksi $transaksi)
     {
         $transaksi->detailTransaksi()->delete();

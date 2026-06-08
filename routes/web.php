@@ -38,6 +38,7 @@ Route::middleware('auth')->group(function () {
 
     // Transactions Routes
     Route::get('transactions/barang-cabang/{id_cabang}', [TransaksiController::class, 'getBarangByCabang'])->name('transactions.barang_cabang');
+    Route::patch('transactions/{transaksi}/validate', [TransaksiController::class, 'validateTransaksi'])->name('transactions.validate');
     Route::resource('transactions', TransaksiController::class)->parameters(['transactions' => 'transaksi']);
 
     // Stock In Routes
