@@ -16,6 +16,8 @@
             <tr>
                 @if($type === 'stok')
                     <th>ID Stok</th><th>Cabang</th><th>Barang</th><th>Jumlah</th>
+                @elseif($type === 'penjualan')
+                    <th>ID</th><th>Cabang</th><th>Kasir</th><th>Tanggal</th><th>Total</th>
                 @else
                     <th>ID</th><th>Cabang</th><th>Kasir</th><th>Tanggal</th><th>Total</th>
                 @endif
@@ -29,6 +31,12 @@
                         <td>{{ $row->id_cabang }}</td>
                         <td>{{ $row->barang?->nama_barang ?? ($row['nama_barang'] ?? '-') }}</td>
                         <td>{{ $row->jumlah_stok ?? $row['jumlah_stok'] }}</td>
+                    @elseif($type === 'penjualan')
+                        <td>{{ $row->id_transaksi }}</td>
+                        <td>{{ $row->cabang_name ?? $row->id_cabang }}</td>
+                        <td>{{ $row->kasir_name ?? $row->id_kasir }}</td>
+                        <td>{{ $row->tanggal_transaksi }}</td>
+                        <td>{{ $row->total_harga }}</td>
                     @else
                         <td>{{ $row->id_transaksi }}</td>
                         <td>{{ $row->id_cabang }}</td>
