@@ -1,6 +1,5 @@
 <?php
 
-use Maatwebsite\Excel\Excel;
 use PhpOffice\PhpSpreadsheet\Reader\Csv;
 
 return [
@@ -178,32 +177,24 @@ return [
     |
     */
     'extension_detector' => [
-        'xlsx'     => Excel::XLSX,
-        'xlsm'     => Excel::XLSX,
-        'xltx'     => Excel::XLSX,
-        'xltm'     => Excel::XLSX,
-        'xls'      => Excel::XLS,
-        'xlt'      => Excel::XLS,
-        'ods'      => Excel::ODS,
-        'ots'      => Excel::ODS,
-        'slk'      => Excel::SLK,
-        'xml'      => Excel::XML,
-        'gnumeric' => Excel::GNUMERIC,
-        'htm'      => Excel::HTML,
-        'html'     => Excel::HTML,
-        'csv'      => Excel::CSV,
-        'tsv'      => Excel::TSV,
+        'xlsx'     => 'XLSX',
+        'xlsm'     => 'XLSX',
+        'xltx'     => 'XLSX',
+        'xltm'     => 'XLSX',
+        'xls'      => 'XLS',
+        'xlt'      => 'XLS',
+        'ods'      => 'ODS',
+        'ots'      => 'ODS',
+        'slk'      => 'SLK',
+        'xml'      => 'XML',
+        'gnumeric' => 'GNUMERIC',
+        'htm'      => 'HTML',
+        'html'     => 'HTML',
+        'csv'      => 'CSV',
+        'tsv'      => 'TSV',
 
-        /*
-        |--------------------------------------------------------------------------
-        | PDF Extension
-        |--------------------------------------------------------------------------
-        |
-        | Configure here which Pdf driver should be used by default.
-        | Available options: Excel::MPDF | Excel::TCPDF | Excel::DOMPDF
-        |
-        */
-        'pdf'      => Excel::DOMPDF,
+        // PDF driver fallback name
+        'pdf'      => 'DOMPDF',
     ],
 
     /*
@@ -224,7 +215,7 @@ return [
     |
     */
     'value_binder'       => [
-        'default' => Maatwebsite\Excel\DefaultValueBinder::class,
+        'default' => PhpOffice\PhpSpreadsheet\Cell\StringValueBinder::class,
     ],
 
     'cache'        => [
