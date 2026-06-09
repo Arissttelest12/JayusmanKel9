@@ -3,11 +3,10 @@
 namespace App\Exports;
 
 use App\Models\Transaksi;
-use Maatwebsite\Excel\Concerns\FromCollection;
-use Maatwebsite\Excel\Concerns\WithHeadings;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 
-class LaporanTransaksiExport implements FromCollection, WithHeadings
+class LaporanTransaksiExport
 {
     protected $from;
     protected $to;
@@ -18,7 +17,7 @@ class LaporanTransaksiExport implements FromCollection, WithHeadings
         $this->to = $to;
     }
 
-    public function collection()
+    public function collection(): Collection
     {
         $query = Transaksi::select('id_transaksi','id_cabang','id_kasir','tanggal_transaksi','total_harga');
         if (Auth::user()->hasRole(['manager','Manager'])) {

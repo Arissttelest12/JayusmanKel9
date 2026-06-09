@@ -10,7 +10,7 @@ use App\Models\StokBarang;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Maatwebsite\Excel\Facades\Excel;
+use Rap2hpoutre\FastExcel\FastExcel;
 
 class ReportController extends Controller
 {
@@ -78,11 +78,14 @@ class ReportController extends Controller
         $to = $request->input('to');
 
         if ($type === 'penjualan') {
-            return Excel::download(new LaporanPenjualanExport($from, $to), "laporan_penjualan.xlsx");
+            $export = new LaporanPenjualanExport($from, $to);
+            return (new FastExcel($export->collection()))->download("laporan_penjualan.xlsx");
         } elseif ($type === 'stok') {
-            return Excel::download(new LaporanStokExport($from, $to), "laporan_stok.xlsx");
+            $export = new LaporanStokExport($from, $to);
+            return (new FastExcel($export->collection()))->download("laporan_stok.xlsx");
         }
-        return Excel::download(new LaporanTransaksiExport($from, $to), "laporan_transaksi.xlsx");
+        $export = new LaporanTransaksiExport($from, $to);
+        return (new FastExcel($export->collection()))->download("laporan_transaksi.xlsx");
     }
 
     protected function viewDataForExport($type, $from, $to)

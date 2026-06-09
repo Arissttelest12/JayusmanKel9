@@ -3,11 +3,10 @@
 namespace App\Exports;
 
 use App\Models\StokBarang;
-use Maatwebsite\Excel\Concerns\FromCollection;
-use Maatwebsite\Excel\Concerns\WithHeadings;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 
-class LaporanStokExport implements FromCollection, WithHeadings
+class LaporanStokExport
 {
     protected $from;
     protected $to;
@@ -18,7 +17,7 @@ class LaporanStokExport implements FromCollection, WithHeadings
         $this->to = $to;
     }
 
-    public function collection()
+    public function collection(): Collection
     {
         $query = StokBarang::with('barang')->select('id_stok','id_cabang','id_barang','jumlah_stok');
         if (Auth::user()->hasRole(['manager','Manager'])) {
